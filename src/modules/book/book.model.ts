@@ -36,7 +36,6 @@ bookSchema.method("updateAvailability", function () {
 });
 
 bookSchema.post("findOneAndDelete", async function (doc) {
-  console.log(doc);
   await Borrow.deleteMany({ book: doc._id });
 });
 export const Book = mongoose.model<BookDocument>("Book", bookSchema);
