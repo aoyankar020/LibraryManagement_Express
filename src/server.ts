@@ -1,18 +1,20 @@
 import { Request, Response } from "express";
 import { app } from "./app";
-
+import cors from "cors";
 import mongoose from "mongoose";
+import config from "./config";
+// ✅ Enable CORS for all origins
+app.use(cors());
 
-const port = process.env.PORT || 3000;
-
-async function main() {
-  const connection = await mongoose.connect(
-    "mongodb+srv://aoyankar36:admin@cluster0.wc1urj7.mongodb.net/library?retryWrites=true&w=majority&appName=Cluster0"
-  );
-
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-  });
+async function server() {
+  try {
+    await mongoose.connect(config.database_url!);
+    app.listen(config.port, () => {
+      console.log(`Example app listening on port ${config.port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-main().catch((err) => console.log(err));
+server().catch((err) => console.log(err));
