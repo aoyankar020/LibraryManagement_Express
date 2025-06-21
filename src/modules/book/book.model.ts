@@ -1,5 +1,5 @@
 import mongoose, { Model } from "mongoose";
-import { BookMethods, IBook } from "./book.interface";
+
 import { BookDocument } from "./bookdocument";
 import { Borrow } from "../borrower/borrower.model";
 
@@ -37,6 +37,6 @@ bookSchema.method("updateAvailability", function () {
 
 bookSchema.post("findOneAndDelete", async function (doc) {
   console.log(doc);
-  const deleted = await Borrow.deleteMany({ book: doc._id });
+  await Borrow.deleteMany({ book: doc._id });
 });
 export const Book = mongoose.model<BookDocument>("Book", bookSchema);

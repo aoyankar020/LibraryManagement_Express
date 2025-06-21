@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { app } from "./app";
 import cors from "cors";
 import mongoose from "mongoose";

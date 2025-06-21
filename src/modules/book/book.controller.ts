@@ -48,7 +48,7 @@ export const createBook = async (req: Request, res: Response) => {
       message: "Book created successfully",
       data,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     const formatted = formatErrorResponse(error);
     res.status(400).send(formatted);
   }
@@ -84,7 +84,7 @@ export const deleteBook = async (req: Request, res: Response) => {
   try {
     const id = req.params.bookId;
     console.log("Deleted Book", id);
-    const data = await Book.findByIdAndDelete(id);
+    await Book.findByIdAndDelete(id);
     res.status(200).send({
       success: true,
       message: "Book deleted successfully",

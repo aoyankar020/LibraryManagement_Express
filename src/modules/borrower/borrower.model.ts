@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { IBorrower } from "./borrower.interface";
 import { Book } from "../book/book.model";
 
@@ -36,13 +36,14 @@ borrowSchema.pre("save", async function (next) {
     if (quantityToBorrow <= bookStock) {
       book.copies = bookStock - quantityToBorrow;
 
-      const status = book.updateAvailability();
+      book.updateAvailability();
       await book.save();
       return next(); // Everything okay, proceed to save
     } else {
       return next(new Error("Not enough copies available to borrow."));
     }
   } catch (err) {
+    console.log(err);
     return next(new Error("Something happend Wrong .")); // In case Book.findById throws
   }
 });
